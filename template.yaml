@@ -115,20 +115,20 @@ Outputs:
     Export:
       Name: !Sub "${ProjectName}-DatabaseEndpoint"
 
-    DatabasePort:
-      Description: Port of the Aurora PostgreSQL cluster
-      Value: !GetAtt AuroraCluster.Endpoint.Port
-      Export:
-        Name: !Sub "${ProjectName}-DatabasePort"
+#   DatabasePort:
+#     Description: Port of the Aurora PostgreSQL cluster
+#     Value: !GetAtt AuroraCluster.Endpoint.Port
+#     Export:
+#       Name: !Sub "${ProjectName}-DatabasePort"
 
-    DatabaseName:
-      Description: Name of the database
-      Value: !Sub "${ProjectName}db"
-      Export:
-        Name: !Sub "${ProjectName}-DatabaseName"
+#   DatabaseName:
+#     Description: Name of the database
+#     Value: !Sub "${ProjectName}db"
+#     Export:
+#       Name: !Sub "${ProjectName}-DatabaseName"
 
-    DatabaseSecretArn:
-      Description: ARN of the secret containing database credentials
-      Value: !Ref DatabaseSecret
-      Export:
-        Name: !Sub "${ProjectName}-DatabaseSecretArn"
+#   DatabaseSecretArn:
+#     Description: ARN of the secret containing database credentials
+#     Value: !Ref DatabaseSecret
+#     Export:
+#       Name: !Sub "${ProjectName}-DatabaseSecretArn"
