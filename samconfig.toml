@@ -1,0 +1,19 @@
+
+# definiuje rozne srodowiska, ktore mozna deployowac
+
+# More information about the configuration file can be found here:
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
+version = 0.1
+
+[default]
+[default.global.parameters]
+stack_name = "infra-stack-maciek-1"
+
+[default.deploy.parameters]
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = false
+s3_bucket = "szkolenie-deplyment-bucket-1"
+region = "eu-north-1"
+parameter_overrides = "ProjectName=\"szkolenie-projekt\""
+no_fail_on_empty_changeset = true
+

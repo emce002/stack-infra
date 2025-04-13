@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: SAM Template for Astro project deployment with S3 and CloudFront (No custom domain)
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: dev
+    Description: The environment to deploy to (e.g., dev, prod)
+
+Resources:
+
+  ECSCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: maciek-cluster-name-2
+      CapacityProviders:
+        - FARGATE
+      DefaultCapacityProviderStrategy:
+        - CapacityProvider: FARGATE
+          Weight: 1
+      Configuration:
+        ExecuteCommandConfiguration:
+          Logging: DEFAULT
+
+Outputs:
+  ClusterUri:
+    Description: URI of the Cluster
+    Value: !Ref ECSCluster
+#    Export:
+#      Name: !Sub "${ProjectName}-ClusterUri"
