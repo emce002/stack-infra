@@ -106,11 +106,11 @@ Outputs:
 #    Export:
 #      Name: !Sub "${ProjectName}-ClusterUri"
 
-  DatabaseEndpoint:
-    Description: Endpoint of the Aurora PostgreSQL cluster
-    Value: !GetAtt AuroraCluster.Endpoint.Address
-    Export:
-      Name: !Sub "${ProjectName}-DatabaseEndpoint"
+#  DatabaseEndpoint:
+#    Description: Endpoint of the Aurora PostgreSQL cluster
+#    Value: !GetAtt AuroraCluster.Endpoint.Address
+#    Export:
+#      Name: !Sub "${ProjectName}-DatabaseEndpoint"
 
 #   DatabasePort:
 #     Description: Port of the Aurora PostgreSQL cluster
