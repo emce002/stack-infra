@@ -74,7 +74,7 @@ Resources:
     Properties:
       Engine: aurora-postgresql
       EngineVersion: 16.6
-      DatabaseName: !Sub "${ProjectName}db"
+      DatabaseName: maciekDb
       MasterUsername: !Ref DatabaseUsername
       MasterUserPassword: !Join ['', ['{{resolve:secretsmanager:', !Ref GeneratedDatabasePassword, ':SecretString:password}}' ]]
       DBSubnetGroupName: !Ref DBSubnetGroup
