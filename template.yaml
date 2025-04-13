@@ -20,6 +20,9 @@ Parameters:
   SubnetIds:
     Type: CommaDelimitedList
     Description: The IDs of the subnets where the ECS cluster will be created
+  ServiceSecurityGroupId:
+    Type: String
+    Description: Security Group ID for the ECS Service
 
 Resources:
 
