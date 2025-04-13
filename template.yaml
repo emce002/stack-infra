@@ -69,38 +69,36 @@ Resources:
         PasswordLength: 16
         ExcludeCharacters: '"@/\'
 
-  AuroraCluster:
-    Type: AWS::RDS::DBCluster
-    Properties:
-      Engine: aurora-postgresql
-      EngineVersion: 16.6
-      DatabaseName: maciekDb
-      MasterUsername: !Ref DatabaseUsername
-      MasterUserPassword: !Join ['', ['{{resolve:secretsmanager:', !Ref GeneratedDatabasePassword, ':SecretString:password}}' ]]
-      DBSubnetGroupName: !Ref DBSubnetGroup
-      VpcSecurityGroupIds:
-        - !Ref DBSecurityGroup
-      BackupRetentionPeriod: 7
-      StorageEncrypted: true
-      DeletionProtection: false
 
-  AuroraInstance:
-    Type: AWS::RDS::DBInstance
-    Properties:
-      DBClusterIdentifier: !Ref AuroraCluster
-      DBInstanceClass: db.t4g.micro
-      Engine: aurora-postgresql
-      PubliclyAccessible: false
+    PostgreSQLDatabase:
+      Type: AWS::RDS::DBInstance
+      Properties:
+        DBName: maciekDbName
+        DBInstanceIdentifier: !Sub "${ProjectName}-postgres"
+        AllocatedStorage: 20
+        DBInstanceClass: db.t3.micro
+        Engine: postgres
+        EngineVersion: 16.6
+        MasterUsername: !Ref DatabaseUsername
+        MasterUserPassword: !Join [ '', [ '{{resolve:secretsmanager:', !Ref GeneratedDatabasePassword, ':SecretString:password}}' ] ]
+        DBSubnetGroupName: !Ref DBSubnetGroup
+        VPCSecurityGroups:
+          - !Ref DBSecurityGroup
+        BackupRetentionPeriod: 7
+        StorageType: gp2
+        StorageEncrypted: true
+        PubliclyAccessible: false
+        DeletionProtection: false
+        MultiAZ: false
 
-  DatabaseSecret:
-    Type: AWS::SecretsManager::Secret
-    Properties:
-      Name: !Sub "${ProjectName}-db-credentials"
-      Description: "Database credentials"
-      SecretString: !Sub
-        - '{"username":"${DatabaseUsername}","password":"${Password}","engine":"postgres","host":"${AuroraCluster.Endpoint.Address}","port":"${AuroraCluster.Endpoint.Port}","dbname":"${ProjectName}db"}'
-        - Password: !Join ['', ['{{resolve:secretsmanager:', !Ref GeneratedDatabasePassword, ':SecretString:password}}' ]]
-
+    DatabaseSecret:
+      Type: AWS::SecretsManager::Secret
+      Properties:
+        Name: !Sub "${ProjectName}-db-credentials"
+        Description: "Database credentials"
+        SecretString: !Sub
+          - '{"username":"${DatabaseUsername}","password":"${Password}","engine":"postgres","host":"${PostgreSQLDatabase.Endpoint.Address}","port":"${PostgreSQLDatabase.Endpoint.Port}","dbname":"db"}'
+          - Password: !Join [ '', [ '{{resolve:secretsmanager:', !Ref GeneratedDatabasePassword, ':SecretString:password}}' ] ]
 
 Outputs:
   ClusterUri:
